@@ -8,18 +8,21 @@ class DBLayer
 	var $db_host;
 	var $db_link;
 	
-	function Database()
+	function __construct()
 	{
 		$this->db_user = "bernard";
 		$this->db_pass = "lefamily";
 		$this->db_host = "localhost";
 		$this->db_name = "le'family";
+		$this->connect();
 	}
 	
 	function connect()
 	{
-		$this->db_link = mysqli_connect($this->db_host, $this->database_user, $this->database_pass)or die("Could not make connection to MySQL");
-		mysqli_select_db($this->db_name)or die ("Could not open database: ". $this->database_name);
+		$this->db_link = mysqli_connect($this->db_host, $this->database_user, $this->database_pass)
+		or die("Could not make connection to MySQL");
+		mysqli_select_db($this->db_name)
+		or die ("Could not open database: ". $this->database_name);
 	}
 	
 	function disconnect()
