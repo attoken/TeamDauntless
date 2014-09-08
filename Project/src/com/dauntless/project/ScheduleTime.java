@@ -1,0 +1,74 @@
+package com.dauntless.project;
+
+import java.util.Calendar;
+
+import android.support.v7.app.ActionBarActivity;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AnalogClock;
+import android.widget.TimePicker;
+
+public class ScheduleTime extends ActionBarActivity {
+	public static final String TIME = "com.dauntless.project.TIME";
+	public String day = "";
+	public TimePicker timepicker;
+	private int hour;
+	private int minute;
+	static final int TIME_DIALOG_ID = 999;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_schedule_time);
+		
+		AnalogClock analog = (AnalogClock) findViewById(R.id.analogClock1);
+		timepicker = (TimePicker) findViewById(R.id.timePicker);
+		
+		final Calendar c = Calendar.getInstance();
+		hour = c.get(Calendar.HOUR_OF_DAY);
+		minute = c.get(Calendar.MINUTE);
+		
+		//timepicker.setCurrentHour(hour);
+		//timepicker.setCurrentMinute(minute);
+		
+		Intent intent = getIntent();
+	    day = intent.getStringExtra(ScheduleDay.DAY);
+
+	    Log.i("Day", ""+day);
+		
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.schedule_time, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	public void setTime(View view) {
+	    Intent intent = new Intent(this, ScheduleFamily.class);
+	    String message = day + " " + "18:00";//+ " " + String.valueOf(hour) + ":" + String.valueOf(minute);
+	    intent.putExtra(TIME, message);
+	    startActivity(intent);
+	}
+}
