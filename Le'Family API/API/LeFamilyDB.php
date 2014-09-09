@@ -1,16 +1,17 @@
 <?php
-use Database\DBLayer;
+require_once 'ResponseObject.php';
+require_once 'DBLayer.php'; 
 
-class LeFamilyDB
+$response = new ResponseObject();
+
+class LeFamilyDB 
 {
-	function __construct()
-	{
-		$db = new DBLayer();
-	}
+	
 	function insertFamily()
 	{
+
 		//create your insert statement
-		$insert_stmt = '';
+		$insert_stmt = '';	
 		$db->execute($insert_stmt);
 		$db->disconnect();
 	}
@@ -23,10 +24,23 @@ class LeFamilyDB
 	}
 	function selectFamily()
 	{
+		$db = new DBLayer();
 		//create your select statement
-		$select_stmt = '';
-		$db->query($select_stmt);
+		$select_stmt = 'SELECT * FROM family;';
+		$results = $db->query($select_stmt);
+		if($results!=false)
+		{
+			$response["success"] = true;
+			$response["message"] = $results;
+		}
+		else
+		{
+			$response["success"] = false;
+			$response["error"] = "Failed to retreive any information from Family";
+		}
+		var_dump($response);
 		$db->disconnect();
+		return $response;
 	}
 	
 	function insertUser()
@@ -101,4 +115,6 @@ class LeFamilyDB
 	
 }
 
+$test = new LeFamilyDB();
+$test->selectFamily();
 ?>

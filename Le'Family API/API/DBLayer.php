@@ -10,18 +10,22 @@ class DBLayer
 	
 	function __construct()
 	{
-		$this->db_user = "bernard";
-		$this->db_pass = "lefamily";
+		$this->db_user = "root";
+		$this->db_pass = "";
 		$this->db_host = "localhost";
-		$this->db_name = "le'family";
+		$this->db_name = "lefamily";
 		$this->connect();
+	}
+	function __destruct()
+	{
+		$this->disconnect();
 	}
 	
 	function connect()
 	{
-		$this->db_link = mysqli_connect($this->db_host, $this->database_user, $this->database_pass)
+		$this->db_link = mysqli_connect($this->db_host, $this->db_user, $this->db_pass)
 		or die("Could not make connection to MySQL");
-		mysqli_select_db($this->db_name)
+		mysqli_select_db($this->db_link, $this->db_name)
 		or die ("Could not open database: ". $this->database_name);
 	}
 	
@@ -37,7 +41,7 @@ class DBLayer
 	{
 		if(!isset($this->db_link))
 			$this->connect();
-		$result = mysqli_query($q_statement, $this->db_link);
+		$result = mysqli_query($this->db_link, $q_statement );
 		$returnArray = array();
 		$i = 0;
 		while($row = mysqli_fetch_array($result,MYSQLI_BOTH))
@@ -46,6 +50,7 @@ class DBLayer
 				$returnArray[$i++]=$row;
 		}
 		mysqli_free_result($result);
+		var_dump($returnArray);
 		return $returnArray;
 	}
 	
@@ -58,4 +63,5 @@ class DBLayer
 			error_log("Database not updated");
 	}
 }
+
 ?>
