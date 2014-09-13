@@ -1,11 +1,28 @@
 <?php
-class ResponseObject
+ class ResponseObject
 {
+	var $success;
+	var $message = array();
+	var $error;
 	function __construct()
 	{
-		$response = array();
-		$response["success"]= 0;
-		$response["message"] ="";
-		$response["error"] = "";
+		$success = 0;
+		$message ;
+		$error = "";
+	}
+	function setResponse($success, $message = "", $error = "")
+	{
+		if($success)
+		{
+			$this->success = $success;
+			$this->message = $message;
+		}
+		else
+		{
+			$this->success = $success;
+			$this->error = $error;
+		}
 	}
 }
+
+?>

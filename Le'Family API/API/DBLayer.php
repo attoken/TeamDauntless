@@ -16,10 +16,6 @@ class DBLayer
 		$this->db_name = "lefamily";
 		$this->connect();
 	}
-	function __destruct()
-	{
-		$this->disconnect();
-	}
 	
 	function connect()
 	{
@@ -41,26 +37,52 @@ class DBLayer
 	{
 		if(!isset($this->db_link))
 			$this->connect();
+		var_dump($q_statement);
 		$result = mysqli_query($this->db_link, $q_statement );
 		$returnArray = array();
 		$i = 0;
-		while($row = mysqli_fetch_array($result,MYSQLI_BOTH))
+		
+		//return successful none select queries
+		if($result)
 		{
-			if ($row)
-				$returnArray[$i++]=$row;
+			return $result;
 		}
-		mysqli_free_result($result);
-		var_dump($returnArray);
-		return $returnArray;
+		//return unsuccessful query
+		else if(!$result)
+		{
+			return $result;
+		}
+		//return select query
+		else
+		{
+			while($row = mysqli_fetch_array($result,MYSQLI_BOTH))
+			{
+				if ($row)
+					$returnArray[$i++]=$row;
+			}
+			mysqli_free_result($result);
+			return $returnArray;
+		}
+		
 	}
 	
-	function execute($exe_statement)
+	function execute($exe_statement, $params)
 	{
+		
+		
 		if(!isset($this->db_link))
 			$this->connect();
-		$result = mysqli_execute($exe_statement);
+		$insert_stmt = mysqli_prepare($this->db_link, $exe_statement);
+		
+		mysqli_stmt_bind_param($insert_stmt, "sss",$var1, $var2, $var3);
+		$val1 = 'Bordeaux';
+		$val2 = 'FRA';
+		$val3 = 'Aquitaine';
+		mysqli_stmt_execute($insert_stmt);
+		
 		if(!$result)
 			error_log("Database not updated");
+		return $result;
 	}
 }
 
