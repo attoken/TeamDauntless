@@ -147,8 +147,10 @@ class LeFamilyController
 	}
 	
 	/**
-	 * Delete user from family
+	 * Delete user from family 
 	 * @param array $familyUserDetails
+	 *  -phoneNumber of user to remove
+	 *  -familyID
 	 * @return string
 	 */
 	function remove_family_member($familyUserDetails)
@@ -177,9 +179,7 @@ class LeFamilyController
 		$userID = $this->retrieve_user_ID($phoneNumber);
 		$response = select_family_created_from_user_admin_id($userID);
 		if($response->success != false)
-		{
 			return true;
-		}
 		else
 			return false;
 	}
@@ -189,7 +189,7 @@ class LeFamilyController
 	 * deletes from family_user first
 	 * checks if he/she is admin of family, if true, select a new 
 	 * @param int $phoneNumber
-	 * @return string
+	 * @return true if succeed in removing, string if not succeeded
 	 */
 	function remove_user($phoneNumber)
 	{
@@ -209,7 +209,7 @@ class LeFamilyController
 	
 	/**
 	 * @param int $familyID
-	 * @return string
+	 * @return true if succeed, false if fails
 	 */
 	function remove_family($familyID)
 	{
