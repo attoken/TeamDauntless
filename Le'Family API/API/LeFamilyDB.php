@@ -2,119 +2,322 @@
 require_once 'ResponseObject.php';
 require_once 'DBLayer.php'; 
 
-$response = new ResponseObject();
+
 
 class LeFamilyDB 
 {
+	public $response;
+	public $db;
 	
-	function insertFamily()
+	function __construct()
 	{
-
+		$this->response = new ResponseObject();
+		$this->db = new DBLayer();
+	}
+	function insert_family($familyName, $userID)
+	{
 		//create your insert statement
-		$insert_stmt = '';	
-		$db->execute($insert_stmt);
-		$db->disconnect();
-	}
-	function deleteFamily()
-	{
-		//create your delete statement
-		$delete_stmt = '';
-		$db->execute($delete_stmt);
-		$db->disconnect();
-	}
-	function selectFamily()
-	{
-		$db = new DBLayer();
-		//create your select statement
-		$select_stmt = 'SELECT * FROM family;';
-		$results = $db->query($select_stmt);
+		$insert_stmt = sprintf("INSERT INTO family 
+								(familyName, familyAdminID) 
+								VALUES ('%s', '%s')", 
+								$familyName, $userID);	
+		
+		$results = $this->db->query($insert_stmt);
+		
+		
 		if($results!=false)
 		{
-			$response["success"] = true;
-			$response["message"] = $results;
+			$this->response->setResponse(true);
 		}
 		else
 		{
-			$response["success"] = false;
-			$response["error"] = "Failed to retreive any information from Family";
+			$this->response->setResponse(false,"","Failed to update any information to family");
 		}
-		var_dump($response);
-		$db->disconnect();
-		return $response;
+		return $this->response;
+	}
+	function delete_family($familyID)
+	{
+
+		$delete_stmt = sprintf("DELETE FROM family
+				WHERE familyID = %s",
+				$familyID);
+
+		$results = $this->db->query($delete_stmt);
+		
+		if($results!=false)
+		{
+			$this->response->setResponse(true);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to delete from family");
+		}
+		return $this->response;
+	}
+	function select_family($familyID)
+	{		
+		//create your select statement
+		$select_stmt = sprintf('SELECT * FROM family WHERE familyID = %s;', $familyID);
+		$results = $this->db->query($select_stmt);
+		$fetch = mysqli_fetch_all($results, MYSQLI_ASSOC);
+		if($results!=false)
+		{
+			$this->response->setResponse(true, $fetch);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to retreive any information from Family");
+		}
+		return $this->response;
+	}
+	function select_familyID($familyName, $adminID)
+	{
+		//create your select statement
+		$select_stmt = sprintf("SELECT familyID FROM family WHERE familyName = '%s' AND familyAdminID = '%s';"
+								, $familyName ,$adminID);
+		
+		$results = $this->db->query($select_stmt);
+		$fetch = mysqli_fetch_row($results);
+		
+		if($results!=false)
+		{
+			$this->response->setResponse(true, $fetch);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to retreive family ID from Family");
+		}
+		
+		return $this->response;
 	}
 	
-	function insertUser()
+	function insert_family_user($familyID, $userID, $position)
+	{
+		//create your insert statement
+		$insert_stmt = sprintf("INSERT INTO family_user
+				(family_userUserID, family_userFamilyID, family_userPosition)
+				VALUES ('%s', '%s', '%s')",
+				$familyID, $userID, $position);
+		var_dump($insert_stmt);
+		$results = $this->db->query($insert_stmt);
+		
+		
+		if($results!=false)
+		{
+			$this->response->setResponse(true);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to update any information to family_user");
+		}
+		return $this->response;
+	}
+	function select_family_member_by_family_id($familyID)
+	{
+		$select_stmt = sprintf("SELECT family_userUserID FROM family_user WHERE family_userFamilyID = %s;"
+				, $familyID);
+		
+		$results = $this->db->query($select_stmt);
+		
+		
+		$fetch = mysqli_fetch_all($results, MYSQLI_NUM);
+		
+		if($results!=false)
+		{
+			$this->response->setResponse(true, $fetch);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to retreive family member from family_user");
+		}
+		
+		return $this->response;
+	}
+	function select_family_id_by_user_id($userID)
+	{
+		$select_stmt = sprintf("SELECT family_userFamilyID FROM family_user WHERE family_userUserID = %s;"
+				, $userID);
+	
+		$results = $this->db->query($select_stmt);
+	
+		$fetch = mysqli_fetch_all($results, MYSQLI_ASSOC);
+
+		if($results!=false)
+		{
+			$this->response->setResponse(true, $fetch);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to retreive family member from family_user");
+		}
+	
+		return $this->response;
+	}
+	function delete_family_member($userID, $familyID)
+	{
+		//create your insert statement
+		if($familyID != -1)
+		{
+			$delete_stmt = sprintf("DELETE FROM family_user
+				WHERE family_userUserID = %s AND family_userFamilyID = %s",
+				$userID, $familyID);
+		}
+		else
+		{
+			$delete_stmt = sprintf("DELETE FROM family_user
+					WHERE family_userUserID = %s",
+					$userID);
+		}
+		
+		$results = $this->db->query($delete_stmt);
+		
+		if($results!=false)
+		{
+			$this->response->setResponse(true);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to delete from family_user");
+		}
+		return $this->response;
+	}
+	function insert_user($userName, $userPhoneNumber, $userSurname)
+	{
+		//create your insert statement
+		$insert_stmt = sprintf("INSERT INTO users 
+								(usersName, usersPhoneNumber, usersSurname) 
+								VALUES ('%s', '%s', '%s')", 
+								$userName, $userPhoneNumber, $userSurname);
+		
+		$results = $this->db->query($insert_stmt);
+		
+		if($results!=false)
+		{
+			$this->response->setResponse(true);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to update any information to users");
+		}
+		return $this->response;
+	}
+	function delete_user($userID)
+	{
+		//create your insert statement
+		$delete_stmt = sprintf("DELETE FROM users
+				WHERE usersID = %s ",
+				$userID);
+		
+		$results = $this->db->query($delete_stmt);
+		
+		if($results!=false)
+		{
+			$this->response->setResponse(true);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to delete from users");
+		}
+		return $this->response;
+	}
+	function select_user($userID)
+	{
+		$select_stmt = sprintf("SELECT * FROM users WHERE usersID = %s;"
+				, $userID);
+		
+		$results = $this->db->query($select_stmt);		
+		$fetch = mysqli_fetch_all($results, MYSQLI_ASSOC);
+		if($results!=false)
+		{
+			$this->response->setResponse(true, $fetch);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to retreive family ID from Family");
+		}
+		
+		return $this->response;
+	}
+	function select_userID_from_userPhone($phoneNumber)
+	{
+		$select_stmt = sprintf('SELECT usersID FROM users WHERE usersPhoneNumber = %s;', $phoneNumber);
+		$results = $this->db->query($select_stmt);
+		$fetch = mysqli_fetch_row($results);
+		if($results!=false)
+		{
+			$this->response->setResponse(true, $fetch);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to retreive any information from users");
+		}
+		return $this->response;
+	}
+	function select_family_created_from_user_admin_id($adminID)
+	{
+		//create your select statement
+		$select_stmt = sprintf("SELECT familyID FROM family WHERE familyAdminID = '%s';"
+				,$adminID);
+		
+		$results = $this->db->query($select_stmt);
+		$fetch = mysqli_fetch_row($results);
+		
+		if($results!=false)
+		{
+			$this->response->setResponse(true, $fetch);
+		}
+		else
+		{
+			$this->response->setResponse(false,"","Failed to retreive family ID from Family");
+		}
+		
+		return $this->response;
+	}
+	function insert_event()
 	{
 	
 	}
-	function deleteUser()
+	function delete_event()
 	{
 	
 	}
-	function selectUser()
-	{
-	
-	}
-	
-	function insertPet()
-	{
-	
-	}
-	function deletePet()
-	{
-	
-	}
-	function selectPet()
+	function select_event()
 	{
 	
 	}
 	
-	function insertEvent()
+	function insert_voice_message()
 	{
 	
 	}
-	function deleteEvent()
+	function delete_voice_message()
 	{
 	
 	}
-	function selectEvent()
-	{
-	
-	}
-	
-	function insertVoiceMessage()
-	{
-	
-	}
-	function deleteVoiceMessage()
-	{
-	
-	}
-	function selectVoiceMessage()
+	function select_voice_message()
 	{
 	
 	}
 	
-	function insertPhoto()
+	function insert_photo()
 	{
 	
 	}
-	function deletePhoto()
+	function delete_photo()
 	{
 	
 	}
-	function selectPhoto()
+	function select_photo()
 	{
 	
 	}
 	
-	function selectPanicStatus()
+	function select_panic_status()
 	{
 		
 	}
 	
 }
 
-$test = new LeFamilyDB();
-$test->selectFamily();
+
 ?>
