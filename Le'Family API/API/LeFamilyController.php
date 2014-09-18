@@ -1,6 +1,19 @@
 <?php
-require_once 'LeFamilyDB.php';;
-
+header('Content-Type: application/json');
+require_once 'LeFamilyDB.php';
+$LFC = new LeFamilyController();
+// $response = $test->retreive_family_details(0);
+$phoneNumber = $_POST['phoneNumber'];
+$functionCall = $_POST['functionCall'];
+switch ($functionCall)
+{
+	//
+	case '1':
+		$returnValue = $LFC->check_for_existing_user($phoneNumber);
+		//error_log(print_R($returnValue,TRUE));
+		error_log(json_encode($returnValue));
+		echo json_encode($returnValue );
+}
 class LeFamilyController
 {
 	public $LFDB;
@@ -36,7 +49,8 @@ class LeFamilyController
 	function check_for_existing_user($phoneNumber)
 	{
 		$response = $this->LFDB->select_userID_from_userPhone($phoneNumber);
-		return json_encode($response);
+		
+		return $response;
 	}
 	/**
 	 * Create user
@@ -65,7 +79,7 @@ class LeFamilyController
 	}
 	
 	/**
-	 * 
+	 * Create Family
 	 * @param array $familyDetails
 	 * 	-phoneNumber
 	 * 	-familyName
@@ -251,11 +265,12 @@ class LeFamilyController
 		
 	
 }
+
 //$array = array("name" => "hi", "phoneNumber" => "1234568", "surname" => "ber");
 // $array = array("familyName" => "berber", "phoneNumber" => "1234568", "surname" => "ber");
 //$array = array("familyID" => 34, "phoneNumber" => "0" );
 // var_dump($array);
-$test = new LeFamilyController();
-$response = $test->retreive_family_details(0);
-var_dump($response);
+// $test = new LeFamilyController();
+// $response = $test->retreive_family_details(0);
+// var_dump($response);
 ?>

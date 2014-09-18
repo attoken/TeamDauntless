@@ -241,6 +241,7 @@ class LeFamilyDB
 	function select_userID_from_userPhone($phoneNumber)
 	{
 		$select_stmt = sprintf('SELECT usersID FROM users WHERE usersPhoneNumber = %s;', $phoneNumber);
+		error_log("iamhere");
 		$results = $this->db->query($select_stmt);
 		$fetch = mysqli_fetch_row($results);
 		if($results!=false)
@@ -251,6 +252,7 @@ class LeFamilyDB
 		{
 			$this->response->setResponse(false,"","Failed to retreive any information from users");
 		}
+		error_log(print_r($this->response, true));
 		return $this->response;
 	}
 	function select_family_created_from_user_admin_id($adminID)
