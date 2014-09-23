@@ -49,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
     }
     
     public void schedule(View view) {
-	    Intent intent = new Intent(this, ScheduleEvent.class);
+	    Intent intent = new Intent(this, CreateEventTypeActivity.class);
 	    //EditText editText = (EditText) findViewById(R.id.edit_message);
 	    //String message = editText.getText().toString();
 	    //intent.putExtra(EXTRA_MESSAGE, message);
@@ -57,35 +57,35 @@ public class MainActivity extends ActionBarActivity {
 	}
     
     public void meetings(View view) {
-	    Intent intent = new Intent(this, Schedules.class);
+	    Intent intent = new Intent(this, EventsActivity.class);
 	    String message = "Dauntless";
 	    intent.putExtra(MENU, message);
 	    startActivity(intent);
 	}
     
     public void settings(View view) {
-	    Intent intent = new Intent(this, Settings.class);
+	    Intent intent = new Intent(this, SettingsActivity.class);
 	    //String message = "Settings";
 	    //intent.putExtra(MENU, message);
 	    startActivity(intent);
 	}
     
     public void gallery(View view) {
-	    Intent intent = new Intent(this, Gallery.class);
+	    Intent intent = new Intent(this, GalleryActivity.class);
 	    //String message = "Settings";
 	    //intent.putExtra(MENU, message);
 	    startActivity(intent);
 	}
     
     public void families(View view) {
-	    Intent intent = new Intent(this, Families.class);
+	    Intent intent = new Intent(this, FamiliesCircleActivity.class);
 	    //String message = "Settings";
 	    //intent.putExtra(MENU, message);
 	    startActivity(intent);
 	}
     
     public void petMenu(View view) {
-	    Intent intent = new Intent(this, PetMenu.class);
+	    Intent intent = new Intent(this, PetMenuActivity.class);
 	    //String message = "Settings";
 	    //intent.putExtra(MENU, message);
 	    startActivity(intent);

@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScheduleEvent"
+            android:name=".CreateEventTypeActivity"
             android:label="@string/title_activity_schedule_event"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -31,47 +31,47 @@
                 android:value="com.dauntless.project.MainActivity" />
         </activity>
         <activity
-            android:name=".ScheduleDay"
+            android:name=".CreateEventDateActivity"
             android:label="@string/title_activity_schedule_day"
-            android:parentActivityName=".ScheduleEvent" >
+            android:parentActivityName=".CreateEventTypeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dauntless.project.ScheduleEvent" />
         </activity>
         <activity
-            android:name=".ScheduleTime"
+            android:name=".CreateEventTimeActivity"
             android:label="@string/title_activity_schedule_time"
-            android:parentActivityName=".ScheduleDay" >
+            android:parentActivityName=".CreateEventDateActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dauntless.project.ScheduleDay" />
         </activity>
         <activity
-            android:name=".ScheduleFamily"
+            android:name=".CreateEventSelectFamilyActivity"
             android:label="@string/title_activity_schedule_family"
-            android:parentActivityName=".ScheduleTime" >
+            android:parentActivityName=".CreateEventTimeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dauntless.project.ScheduleTime" />
         </activity>
         <activity
-            android:name=".Schedules"
+            android:name=".EventsActivity"
             android:label="@string/title_activity_schedules" >
         </activity>
         <activity
-            android:name=".Settings"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name=".Gallery"
+            android:name=".GalleryActivity"
             android:label="@string/title_activity_gallery" >
         </activity>
         <activity
-            android:name=".Families"
+            android:name=".FamiliesCircleActivity"
             android:label="@string/title_activity_families" >
         </activity>
         <activity
-            android:name=".PetMenu"
+            android:name=".PetMenuActivity"
             android:label="@string/title_activity_pet_menu" >
         </activity>
     </application>
