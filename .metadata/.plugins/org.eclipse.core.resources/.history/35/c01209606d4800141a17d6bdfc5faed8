@@ -1,0 +1,276 @@
+<?php
+
+require_once 'LeFamilyDB.php';
+$LFC = new LeFamilyController();
+// $response = $test->retreive_family_details(0);
+$phoneNumber = $_POST['phoneNumber'];
+$functionCall = $_POST['functionCall'];
+switch ($functionCall)
+{
+	//
+	case '1':
+		$returnValue = $LFC->check_for_existing_user($phoneNumber);
+		//error_log(print_R($returnValue,TRUE));
+		error_log(json_encode($returnValue));
+		echo json_encode($returnValue );
+}
+class LeFamilyController
+{
+	public $LFDB;
+	function __construct()
+	{
+		$this->LFDB = new LeFamilyDB();
+	}
+
+	/**
+	 * retrieve userid with phone number
+	 * helper function
+	 * @param int $phoneNumber
+	 * @return userID or false:
+	 */
+	function retrieve_user_ID($phoneNumber)
+	{
+		$response = $this->LFDB->select_userID_from_userPhone($phoneNumber);
+		if($response->success)
+		{
+			$userID = $response->message[0];
+			return $userID;
+		}
+		else
+		{
+			return $response->success;
+		}
+	}
+	/**
+	 * Check for existing user in loading page
+	 * @param int $phoneNumber
+	 * @return string
+	 */
+	function check_for_existing_user($phoneNumber)
+	{
+		$response = $this->LFDB->select_userID_from_userPhone($phoneNumber);
+		
+		return $response;
+	}
+	/**
+	 * Create user
+	 * @param array $user_details
+	 * 	-name
+	 * 	-phoneNumber
+	 * 	-surname
+	 * @return string
+	 */
+	function create_user($userDetails)
+	{
+		$userName = $userDetails['name'];
+		$userPhoneNumber = $userDetails['phoneNumber'];
+		$userSurname = $userDetails['surname'];
+		$response = $this->LFDB->insert_user($userName, $userPhoneNumber, $userSurname);
+		return json_encode($response);
+	}
+
+	/**
+	 * 
+	 * @param int $phoneNumber
+	 */
+	function retrieve_pet_info($phoneNumber)
+	{
+		$userID = $this->retrieve_user_ID($phoneNumber);
+	}
+	
+	/**
+	 * Create Family
+	 * @param array $familyDetails
+	 * 	-phoneNumber
+	 * 	-familyName
+	 * @return string
+	 */
+	function create_family($familyDetails)
+	{
+		$userID = $this->retrieve_user_ID($familyDetails['phoneNumber']);	
+		if($userID != false)
+		{
+			$familyName = $familyDetails['familyName'];
+			$response = $this->LFDB->insert_family($familyName, $userID);
+			if($response->success == true)
+			{
+				$response = $this->LFDB->select_familyID($familyName, $userID);
+				$familyID = $response->message[0];
+				$this->LFDB->insert_family_user($userID, $familyID, 'Admin');
+				return json_encode($familyID);
+			}
+			else
+			{
+				return json_encode("There exist such a family");
+			}
+		}
+		else 
+		{
+			return json_encode("There is no such user");
+		}
+		
+	}
+	
+	/**
+	 * Create family member
+	 * Needs to include notification
+	 * @param array $familyUserDetails
+	 *  -phoneNumber
+	 *  -familyID
+	 *  -position
+	 * @return string
+	 */
+	function create_family_member($familyUserDetails)
+	{
+		$userID = $this->retrieve_user_ID($familyUserDetails['phoneNumber']);
+		if($userID != false)
+		{
+			//send notification to invitee
+			$this->LFDB->insert_family_user($userID, $familyUserDetails['familyID'], $familyUserDetails['position']);
+		}
+		else
+		{
+			return json_encode("There is no such user");
+		}
+	}
+	
+	/**
+	 * Get all members of family by familyid
+	 * 
+	 * @param int $familyID
+	 * @return string
+	 */
+	function retrieve_family_member($familyID)
+	{
+		
+		$responseFamily = $this->LFDB->select_family_member_by_family_id($familyID);
+		$familyMember = $responseFamily->message;
+		$allMember = array();
+		$max = sizeof($familyMember);
+		$count = 0;
+		while($count < $max)
+		{
+			foreach($familyMember[$count] as $key => $value)
+			{
+				$responseUser = $this->LFDB->select_user($value);
+				$allMember[$count] = $responseUser;				
+			}
+			$count++;
+		}
+		return json_encode($allMember);
+	}
+	
+	/**
+	 * Delete user from family 
+	 * @param array $familyUserDetails
+	 *  -phoneNumber of user to remove
+	 *  -familyID
+	 * @return string
+	 */
+	function remove_family_member($familyUserDetails)
+	{
+		$userID = $this->retrieve_user_ID($familyUserDetails['phoneNumber']);
+		if($userID != false)
+		{
+			//send notification to invitee
+			$response = $this->LFDB->delete_family_member($userID, $familyUserDetails['familyID']);
+			return $response->success;
+		}
+		else
+		{
+			return json_encode("There is no such user");
+		}
+	}
+	
+	/**
+	 * not tested
+	 * check if user is admin, used concurrently for remove_user() function
+	 * @param int $phoneNumber
+	 * @return boolean
+	 */
+	function check_if_user_is_admin($phoneNumber)
+	{
+		$userID = $this->retrieve_user_ID($phoneNumber);
+		$response = select_family_created_from_user_admin_id($userID);
+		if($response->success != false)
+			return true;
+		else
+			return false;
+	}
+	/**
+	 * not tested
+	 * Delete user from user
+	 * deletes from family_user first
+	 * checks if he/she is admin of family, if true, select a new 
+	 * @param int $phoneNumber
+	 * @return true if succeed in removing, string if not succeeded
+	 */
+	function remove_user($phoneNumber)
+	{
+		$check = $this->check_if_user_is_admin($phoneNumber);
+		if($check == false)
+		{
+			//send notification to invitee
+			$this->LFDB->delete_family_member($userID, -1);
+			$response = $this->LFDB->delete_user($userID);
+			return $response->success;
+		}
+		else
+		{
+			return json_encode("You are an admin, please delete away family before deleting yourself");
+		}
+	}
+	
+	/**
+	 * @param int $familyID
+	 * @return true if succeed, false if fails
+	 */
+	function remove_family($familyID)
+	{
+		//send notification to invitee
+		$response = $this->LFDB->delete_family($familyID);
+		return $response->success;
+		
+	}
+	
+	/**
+	 * Retrieve family details of user
+	 * @param int $phoneNumber
+	 * @return string details of user
+	 */
+	function retreive_family_details($phoneNumber)
+	{
+		$userID = $this->retrieve_user_ID($phoneNumber);
+		$responseFamilyID = $this->LFDB->select_family_id_by_user_id($userID);
+		$familyDetailsArray = array();
+		$familyIDArray = $responseFamilyID->message;
+		$max = sizeof($familyIDArray);
+		$count = 0;
+		var_dump ($responseFamilyID);
+		while($count < $max)
+		{
+			foreach($familyIDArray[$count] as $key => $value)
+			{
+				$responseFamilyDetails = $this->LFDB->select_family($value);
+				//var_dump($responseFamilyDetails);
+				$familyDetailsArray[$count] = $responseFamilyDetails->message;
+			}
+			$count++;
+		}
+		
+		return json_encode($familyDetailsArray);
+	
+	}
+	
+		
+	
+}
+
+//$array = array("name" => "hi", "phoneNumber" => "1234568", "surname" => "ber");
+// $array = array("familyName" => "berber", "phoneNumber" => "1234568", "surname" => "ber");
+//$array = array("familyID" => 34, "phoneNumber" => "0" );
+// var_dump($array);
+// $test = new LeFamilyController();
+// $response = $test->retreive_family_details(0);
+// var_dump($response);
+?>
