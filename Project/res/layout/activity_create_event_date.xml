@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.dauntless.project.CreateEventDateActivity" >
+
+    <ImageButton
+        android:id="@+id/monday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/ic_launcher" 
+        android:onClick="dayMonday"
+        />
+
+    <ImageButton
+        android:id="@+id/tuesday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/monday"
+        android:layout_below="@+id/monday"
+        android:src="@drawable/ic_launcher" 
+        android:onClick="dayTuesday"
+        />
+
+    <ImageButton
+        android:id="@+id/wednesday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tuesday"
+        android:layout_below="@+id/tuesday"
+        android:src="@drawable/ic_launcher" 
+        android:onClick="dayWednesday"
+        />
+
+    <ImageButton
+        android:id="@+id/thursday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/wednesday"
+        android:layout_below="@+id/wednesday"
+        android:src="@drawable/ic_launcher" 
+        android:onClick="dayThursday"
+        />
+
+    <ImageButton
+        android:id="@+id/friday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/thursday"
+        android:layout_below="@+id/thursday"
+        android:src="@drawable/ic_launcher" 
+        android:onClick="dayFriday"
+        />
+
+    <ImageButton
+        android:id="@+id/saturday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/friday"
+        android:layout_below="@+id/friday"
+        android:src="@drawable/ic_launcher" 
+        android:onClick="daySaturday"
+        />
+
+    <ImageButton
+        android:id="@+id/sunday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/saturday"
+        android:layout_below="@+id/saturday"
+        android:src="@drawable/ic_launcher" 
+        android:onClick="daySunday"
+        />
+
+</RelativeLayout>

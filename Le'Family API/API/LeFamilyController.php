@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+error_log("hello");
 require_once 'LeFamilyDB.php';
 $LFC = new LeFamilyController();
 // $response = $test->retreive_family_details(0);
