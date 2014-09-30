@@ -31,7 +31,7 @@ class LeFamilyDB
 		}
 		else
 		{
-			$this->response->setResponse(false,"","Failed to insert any information to family");
+			$this->response->setResponse(false,"","Failed to update any information to family");
 		}
 		return $this->response;
 	}
@@ -91,13 +91,14 @@ class LeFamilyDB
 		return $this->response;
 	}
 	
-	function insert_family_user($familyID, $userID, $position, $userName, $adminFlag)
+	function insert_family_user($familyID, $userID, $position)
 	{
 		//create your insert statement
 		$insert_stmt = sprintf("INSERT INTO family_user
-				(family_userUserID, family_userFamilyID, family_userPosition, family_userName, family_userAdminFlag )
-				VALUES ('%s', '%s', '%s', '%s', '%s')",
-				$familyID, $userID, $position,$userName, $adminFlag );
+				(family_userUserID, family_userFamilyID, family_userPosition)
+				VALUES ('%s', '%s', '%s')",
+				$familyID, $userID, $position);
+		var_dump($insert_stmt);
 		$results = $this->db->query($insert_stmt);
 		
 		
@@ -107,7 +108,7 @@ class LeFamilyDB
 		}
 		else
 		{
-			$this->response->setResponse(false,"","Failed to insert any information to family_user");
+			$this->response->setResponse(false,"","Failed to update any information to family_user");
 		}
 		return $this->response;
 	}
@@ -136,11 +137,11 @@ class LeFamilyDB
 	{
 		$select_stmt = sprintf("SELECT family_userFamilyID FROM family_user WHERE family_userUserID = %s;"
 				, $userID);
-		
+	
 		$results = $this->db->query($select_stmt);
 	
 		$fetch = mysqli_fetch_all($results, MYSQLI_ASSOC);
-		error_log(print_r($fetch,true));
+
 		if($results!=false)
 		{
 			$this->response->setResponse(true, $fetch);
@@ -180,13 +181,13 @@ class LeFamilyDB
 		}
 		return $this->response;
 	}
-	function insert_user($userPhoneNumber)
+	function insert_user($userName, $userPhoneNumber, $userSurname)
 	{
 		//create your insert statement
 		$insert_stmt = sprintf("INSERT INTO users 
-								( usersPhoneNumber) 
-								VALUES ( '%s')", 
-								 $userPhoneNumber);
+								(usersName, usersPhoneNumber, usersSurname) 
+								VALUES ('%s', '%s', '%s')", 
+								$userName, $userPhoneNumber, $userSurname);
 		
 		$results = $this->db->query($insert_stmt);
 		
@@ -274,111 +275,19 @@ class LeFamilyDB
 		
 		return $this->response;
 	}
-	/**
-	 * Inserts event and retrieve event index for insertion to event_user table
-	 * @param String $eventType
-	 * @param String $eventTitle
-	 * @param String $userID
-	 * @param String $eventDateTime
-	 */
-	function insert_event($eventType,$eventTitle, $userID,$eventDateTime)
+	function insert_event()
 	{
-		//create your insert statement
-		$insert_stmt = sprintf("INSERT INTO event
-				( eventType, eventTitle, eventHostID, eventDateTime) 
-				VALUES ( '%s', '%s', '%s', '%s')",
-				$eventType,$eventTitle, $userID,$eventDateTime);
-		
-		$results = $this->db->query($insert_stmt);
-		$eventID = $this->db->get_id();
-		
-		if($results!=false)
-		{
-			$this->response->setResponse(true, $eventID);
-		}
-		else
-		{
-			$this->response->setResponse(false,"","Failed to update any information to event");
-		}
-		return $this->response;
+	
 	}
-	function delete_event($eventID)
+	function delete_event()
 	{
-		
-		$delete_stmt = sprintf("DELETE FROM event
-				WHERE eventID = %s",
-				$eventID);
-		
-		$results = $this->db->query($delete_stmt);
-		
-		if($results!=false)
-		{
-			$this->response->setResponse(true);
-		}
-		else
-		{
-			$this->response->setResponse(false,"","Failed to delete from event");
-		}
-		return $this->response;
+	
 	}
-	function select_event($familyID)
+	function select_event()
 	{
-		$select_stmt = sprintf("SELECT * FROM event WHERE eventHostID = (SELECT family_userUserID from family_user WHERE family_userFamilyID = %s);"
-				, $familyID);
-		error_log($select_stmt);
-		$results = $this->db->query($select_stmt);		
-		$fetch = mysqli_fetch_all($results, MYSQLI_ASSOC);
-		if($results!=false)
-		{
-			$this->response->setResponse(true, $fetch);
-		}
-		else
-		{
-			$this->response->setResponse(false,"","Failed to retreive family ID from event");
-		}
-		
-		return $this->response;
-	}
-	function update_event($eventID, $eventType, $eventTitle, $eventDateTime)
-	{
-		$update_stmt = sprintf("UPDATE event
-				SET eventType = '%s', eventTitle  = '%s', eventDateTime  = '%s'
-				WHERE eventID = %s",
-				$eventType, $eventTitle, $eventDateTime, $eventID);
-		error_log($update_stmt);
-		$results = $this->db->query($update_stmt);
-		
-		if($results!=false)
-		{
-			$this->response->setResponse(true);
-		}
-		else
-		{
-			$this->response->setResponse(false,"","Failed to update from event");
-		}
-		return $this->response;
+	
 	}
 	
-	function insert_user_event($userID,$eventID)
-	{
-		//create your insert statement
-		$insert_stmt = sprintf("INSERT INTO user_event
-				( user_eventUserID, user_eventEventID)
-				VALUES ( '%s', '%s')",
-				$userID,$eventID);
-		error_log($insert_stmt);
-		$results = $this->db->query($insert_stmt);
-		
-		if($results!=false)
-		{
-			$this->response->setResponse(true);
-		}
-		else
-		{
-			$this->response->setResponse(false,"","Failed to insert any information to user_event");
-		}
-		return $this->response;
-	}
 	function insert_voice_message()
 	{
 	

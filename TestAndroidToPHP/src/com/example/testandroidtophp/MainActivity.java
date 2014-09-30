@@ -47,11 +47,9 @@ public class MainActivity extends Activity {
 
 		// URL of PHP Script
 
-		url = "http://172.22.73.162:80/LeFamilyController.php/";
-		//192.168.1.67
-//10.0.2.2
+		url = "http://10.0.2.2/LeFamilyController.php/";
 
-		
+
 		new MyTask().execute();
 		
 	}
@@ -67,10 +65,9 @@ public class MainActivity extends Activity {
 		 String json;
 		 int indexStart;
 			int indexEnd;
-			
+			StringBuilder builder = new StringBuilder();
 		    @Override
-		    protected Void doInBackground(Void... params) 
-		    {
+		    protected Void doInBackground(Void... params) {
 		     
 		    	try {
 					httpclient = new DefaultHttpClient();
@@ -81,25 +78,23 @@ public class MainActivity extends Activity {
 				    nameValuePairs.add(new BasicNameValuePair("functionCall", "1"));
 				    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 					response = httpclient.execute(httppost);
-					
+
+					JSONObject jobj = new JSONObject();
 					
 					json = EntityUtils.toString(response.getEntity());
 
 					indexStart = json.indexOf("{");
 					indexEnd = json.indexOf("}");
 					json = json.substring(indexStart, indexEnd+1);
-
-					JSONObject jo = new JSONObject(json);
-					Log.i("json", jo.toString());
 					Log.d("jsonClass", json.getClass().toString());
 					Log.d("error",json);
-					
-					test.setText(json);
+					//test.setText(json);
+
 				}
 
 				catch (Exception e) {
 					// Code to handle exception
-					json = e.toString();
+					test.setText(e.toString());
 				}
 
 		     return null;
@@ -110,7 +105,7 @@ public class MainActivity extends Activity {
 		    protected void onPostExecute(Void result) {
 		     
 		    	try {
-		    		//test.setText(json);
+					
 				} catch (Exception e) {
 					// Code to handle exception
 				} 
