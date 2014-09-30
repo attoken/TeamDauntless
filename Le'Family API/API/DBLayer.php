@@ -65,7 +65,13 @@ class DBLayer
 		}
 		
 	}
-	
+	function get_id()
+	{
+		if(!isset($this->db_link))
+			$this->connect();
+		$id = mysqli_insert_id($this->db_link);
+		return $id;
+	}
 	function execute($exe_statement, $params)
 	{
 		
