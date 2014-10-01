@@ -1111,11 +1111,11 @@ containing a value of this type.
         public static final int collapseActionView=0x7f05000d;
         public static final int confirmTime=0x7f05004b;
         public static final int container=0x7f05005b;
-        public static final int createFamily=0x7f050051;
+        public static final int createFamily=0x7f050050;
         public static final int createFamilyBtn=0x7f05005a;
         public static final int createFamilyDetailBtn=0x7f050056;
         public static final int createFamilyNameEdit=0x7f050053;
-        public static final int createFamilyNameText=0x7f050050;
+        public static final int createFamilyNameText=0x7f050051;
         public static final int createFamilyPositionEdit=0x7f050055;
         public static final int createFamilyPositionText=0x7f050052;
         public static final int createFamilySurnameEdit=0x7f050054;

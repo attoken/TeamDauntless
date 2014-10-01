@@ -266,11 +266,11 @@ int id coin 0x7f05005d
 int id collapseActionView 0x7f05000d
 int id confirmTime 0x7f05004b
 int id container 0x7f05005b
-int id createFamily 0x7f050051
+int id createFamily 0x7f050050
 int id createFamilyBtn 0x7f05005a
 int id createFamilyDetailBtn 0x7f050056
 int id createFamilyNameEdit 0x7f050053
-int id createFamilyNameText 0x7f050050
+int id createFamilyNameText 0x7f050051
 int id createFamilyPositionEdit 0x7f050055
 int id createFamilyPositionText 0x7f050052
 int id createFamilySurnameEdit 0x7f050054

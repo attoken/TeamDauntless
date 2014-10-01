@@ -17,6 +17,10 @@ import org.json.JSONObject;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
 	HttpGet request;
 	HttpResponse response;
 	String url;
+	String phoneNumber;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +50,44 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         url = "http://172.27.121.133:80/LeFamilyController.php/";
 		Log.i("test","hello");
+		
+		TelephonyManager telemanager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+	    //String getSimSerialNumber = telemanager.getLine1Number(); 
+		String getSimSerialNumber = telemanager.getSimSerialNumber();
+		
+		if(getSimSerialNumber == null)
+		{
+			phoneNumber = "9172174900000000000";
+			//Temporary Disabled for development
+			/*
+			Log.i("NULL", "No phone number");
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("You need to have an existing phone number to use this app!")
+			       .setCancelable(false)
+			       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			               finish(); 
+			           }
+			       });
+			AlertDialog alert = builder.create();
+			alert.show();
+			*/
+		}
+		else
+		{
+			Log.i("HEY PHONE NUMBER YO:", getSimSerialNumber);
+			phoneNumber = getSimSerialNumber;
+		}
+		
 		new MyTask().execute();
-		
-		
+	
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        
+
     }
 
 
