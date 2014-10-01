@@ -43,9 +43,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        url = "http://172.22.95.123:80/LeFamilyController.php/";
+        url = "http://192.168.1.67/LeFamilyController.php/";
 		Log.i("test","hello");
-		new MyTask().execute();
+		new MyTask().execute(url);
 		
 		
         if (savedInstanceState == null) {
@@ -136,7 +136,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
     
-    private class MyTask extends AsyncTask<Void, Void, Void>
+    private class MyTask extends AsyncTask<String, Void, Void>
 	{
 		
 		 //TextView result = (TextView) findViewById(R.id.tvResult);
@@ -150,12 +150,12 @@ public class MainActivity extends ActionBarActivity {
 			int indexEnd;
 			StringBuilder builder = new StringBuilder();
 		    @Override
-		    protected Void doInBackground(Void... params) {
+		    protected Void doInBackground(String... params) {
 		     
 		    	try {
-		    		
+		    		System.setProperty("http.keepAlive", "false");
 					httpclient = new DefaultHttpClient();
-					HttpPost httppost = new HttpPost(url);
+					HttpPost httppost = new HttpPost(params[0]);
 					
 					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 				    nameValuePairs.add(new BasicNameValuePair("phoneNumber", "0"));
@@ -164,7 +164,10 @@ public class MainActivity extends ActionBarActivity {
 				    
 				    Log.i("bernard", "WOOHOO");
 					response = httpclient.execute(httppost);
+					Log.v("response code", response.getStatusLine()
+                            .getStatusCode() + ""); 
 					Log.i("bernard2", "WOOHOO");
+					
 					
 					
 					json = EntityUtils.toString(response.getEntity());
@@ -177,10 +180,12 @@ public class MainActivity extends ActionBarActivity {
 					Log.i("jsonClass", json.getClass().toString());
 					Log.i("error",json);
 					//test.setText(json);
+					
 
 				}
 
 				catch (Exception e) {
+					Log.e("error", e.toString());
 					// Code to handle exception
 					
 				}
