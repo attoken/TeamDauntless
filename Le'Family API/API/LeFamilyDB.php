@@ -85,19 +85,19 @@ class LeFamilyDB
 		}
 		else
 		{
-			$this->response->setResponse(false,"","Failed to retreive family ID from Family");
+			$this->response->setResponse(false,"","Failed to retrieve family ID from Family");
 		}
 		
 		return $this->response;
 	}
 	
-	function insert_family_user($familyID, $userID, $position)
+	function insert_family_user($familyID, $userID, $position, $name, $admin )
 	{
 		//create your insert statement
 		$insert_stmt = sprintf("INSERT INTO family_user
-				(family_userUserID, family_userFamilyID, family_userPosition)
-				VALUES ('%s', '%s', '%s')",
-				$familyID, $userID, $position);
+				(family_userUserID, family_userFamilyID, family_userPosition, family_userName, family_userAdminFlag)
+				VALUES ('%s', '%s', '%s', '%s', %s)",
+				$familyID, $userID, $position, $name, $admin);
 		var_dump($insert_stmt);
 		$results = $this->db->query($insert_stmt);
 		
@@ -181,13 +181,13 @@ class LeFamilyDB
 		}
 		return $this->response;
 	}
-	function insert_user($userName, $userPhoneNumber, $userSurname)
+	function insert_user( $userPhoneNumber)
 	{
 		//create your insert statement
 		$insert_stmt = sprintf("INSERT INTO users 
-								(usersName, usersPhoneNumber, usersSurname) 
-								VALUES ('%s', '%s', '%s')", 
-								$userName, $userPhoneNumber, $userSurname);
+								(usersPhoneNumber) 
+								VALUES ('%s')", 
+								$userPhoneNumber);
 		
 		$results = $this->db->query($insert_stmt);
 		

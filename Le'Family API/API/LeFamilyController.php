@@ -1,14 +1,14 @@
 <?php
-error_log("hello");
 require_once 'LeFamilyDB.php';
 $LFC = new LeFamilyController();
 // $response = $test->retreive_family_details(0);
-$phoneNumber = $_POST['phoneNumber'];
+//$phoneNumber = $_POST['phoneNumber'];
 $functionCall = $_POST['functionCall'];
 switch ($functionCall)
 {
 	//
 	case '1':
+		$phoneNumber = $_POST['phoneNumber'];
 		$returnValue = $LFC->check_for_existing_user($phoneNumber);
 		//error_log(print_R($returnValue,TRUE));
 		error_log(json_encode($returnValue));
@@ -49,7 +49,10 @@ class LeFamilyController
 	function check_for_existing_user($phoneNumber)
 	{
 		$response = $this->LFDB->select_userID_from_userPhone($phoneNumber);
-		
+		if($response->success == false)
+		{
+			$response = $this->create_user($phoneNumber);
+		}
 		return $response;
 	}
 	/**
@@ -60,12 +63,10 @@ class LeFamilyController
 	 * 	-surname
 	 * @return string
 	 */
-	function create_user($userDetails)
+	function create_user($phoneNumber)
 	{
-		$userName = $userDetails['name'];
-		$userPhoneNumber = $userDetails['phoneNumber'];
-		$userSurname = $userDetails['surname'];
-		$response = $this->LFDB->insert_user($userName, $userPhoneNumber, $userSurname);
+		
+		$response = $this->LFDB->insert_user($phoneNumber);
 		return json_encode($response);
 	}
 
@@ -91,12 +92,15 @@ class LeFamilyController
 		if($userID != false)
 		{
 			$familyName = $familyDetails['familyName'];
+			$familyPostion = $familyDetails['position'];
+			$userName = $familyDetails['name'];
+			$admin = $familyDetails["admin"];
 			$response = $this->LFDB->insert_family($familyName, $userID);
 			if($response->success == true)
 			{
 				$response = $this->LFDB->select_familyID($familyName, $userID);
 				$familyID = $response->message[0];
-				$this->LFDB->insert_family_user($userID, $familyID, 'Admin');
+				$this->LFDB->insert_family_user($userID, $familyID, $familyPostion, $userName, $admin);
 				return json_encode($familyID);
 			}
 			else
@@ -118,6 +122,8 @@ class LeFamilyController
 	 *  -phoneNumber
 	 *  -familyID
 	 *  -position
+	 *  -username
+	 *  -
 	 * @return string
 	 */
 	function create_family_member($familyUserDetails)
@@ -126,6 +132,10 @@ class LeFamilyController
 		if($userID != false)
 		{
 			//send notification to invitee
+			$familyName = $familyDetails['familyName'];
+			$familyPostion = $familyDetails['position'];
+			$userName = $familyDetails['name'];
+			$admin = $familyDetails["admin"];
 			$this->LFDB->insert_family_user($userID, $familyUserDetails['familyID'], $familyUserDetails['position']);
 		}
 		else
