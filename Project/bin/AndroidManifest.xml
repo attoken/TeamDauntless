@@ -5,8 +5,10 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -73,6 +75,14 @@
         <activity
             android:name=".PetMenuActivity"
             android:label="@string/title_activity_pet_menu" >
+        </activity>
+        <activity
+            android:name=".CreateFamilyActivity"
+            android:label="@string/title_activity_create_family" >
+        </activity>
+        <activity
+            android:name=".TestActivity"
+            android:label="@string/title_activity_test" >
         </activity>
     </application>
 

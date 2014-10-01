@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        url = "http://172.22.95.123:80/LeFamilyController.php/";
+        url = "http://172.27.121.133:80/LeFamilyController.php/";
 		Log.i("test","hello");
 		new MyTask().execute();
 		
@@ -53,8 +53,6 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-        
-        
     }
 
 
@@ -181,6 +179,7 @@ public class MainActivity extends ActionBarActivity {
 				}
 
 				catch (Exception e) {
+					Log.i("error_exception", e.toString());
 					// Code to handle exception
 					
 				}

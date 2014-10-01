@@ -1,0 +1,37 @@
+package com.dauntless.project;
+
+public class FamilyAdmin {
+	String name;
+	String surname;
+	String position;
+	
+	public void setName(String newName)
+	{
+		name = newName;
+	}
+	
+	public void setSurname(String newSurname)
+	{
+		surname = newSurname;
+	}
+	
+	public void setPosition(String newPosition)
+	{
+		position = newPosition;
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public String getSurname()
+	{
+		return surname;
+	}
+	
+	public String getPosition()
+	{
+		return position;
+	}
+}

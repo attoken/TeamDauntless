@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
 
 		// URL of PHP Script
 
-		url = "http://172.22.126.40:80/LeFamilyController.php/";
+		url = "http://172.22.121.133:80/LeFamilyController.php/";
 		Log.i("test","hello");
 		new MyTask().execute();
 		

@@ -13,5 +13,7 @@
     <string name="title_activity_gallery">Gallery</string>
     <string name="title_activity_families">Families</string>
     <string name="title_activity_pet_menu">PetMenu</string>
+    <string name="title_activity_create_family">CreateFamilyActivity</string>
+    <string name="title_activity_test">TestActivity</string>
 
 </resources>
