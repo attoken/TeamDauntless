@@ -1,16 +1,96 @@
 package com.dauntless.project;
 
 import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class FamiliesCircleActivity extends ActionBarActivity {
-
+	boolean hasCreated = false;
+	FamilyAdmin familyAdmin;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_families);
+		
+		
+		Bundle data = getIntent().getExtras();
+		if(data == null)
+		{
+			Log.i("Data", "NULL");
+		}
+		else
+		{
+			familyAdmin = (FamilyAdmin) data.getParcelable("familyAdmin");
+			Log.i("Family Admin", familyAdmin.getName());
+			
+			//TODO GIVE BERNARD THESE 3 DETAILS FROM THE ACTIVITY BEFORE THIS TOGETHER WITH
+			// THE PHONE NUMBER**
+			hasCreated = true;
+		}
+		
+		
+		
+		final ActionBar actionBar = getActionBar();
+		// Specify that tabs should be displayed in the action bar.
+	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+	    // Create a tab listener that is called when the user changes tabs.
+	    final ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+	        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+	            // show the given tab
+	        
+
+			}
+
+			@Override
+			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onTabReselected(Tab tab, FragmentTransaction ft) {
+				// TODO Auto-generated method stub
+				
+			}
+	    };
+
+	    /*/ Add 3 tabs, specifying the tab's text and TabListener
+	    for (int i = 0; i < 3; i++) {
+	        actionBar.addTab(
+	                actionBar.newTab()
+	                        //.setText("Tab " + (i + 1))
+	                        .setText("Low's Family")
+	                		.setTabListener(tabListener));
+	    }*/
+	    
+	    if(hasCreated)
+	    {
+    	actionBar.addTab(
+                actionBar.newTab().setText(familyAdmin.getName() + " Family").setTabListener(tabListener));            		
+	    }
+
+        final Button button = (Button) findViewById(R.id.createFamilyBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	           	
+            	Intent intent = new Intent(FamiliesCircleActivity.this, CreateFamilyActivity.class);
+        	    startActivity(intent);
+        	    
+        	    
+            }
+        });
+
+
 	}
 
 	@Override

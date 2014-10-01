@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dauntless.project"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CreateEventTypeActivity"
+            android:label="@string/title_activity_schedule_event"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dauntless.project.MainActivity" />
+        </activity>
+        <activity
+            android:name=".CreateEventDateActivity"
+            android:label="@string/title_activity_schedule_day"
+            android:parentActivityName=".CreateEventTypeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dauntless.project.ScheduleEvent" />
+        </activity>
+        <activity
+            android:name=".CreateEventTimeActivity"
+            android:label="@string/title_activity_schedule_time"
+            android:parentActivityName=".CreateEventDateActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dauntless.project.ScheduleDay" />
+        </activity>
+        <activity
+            android:name=".CreateEventSelectFamilyActivity"
+            android:label="@string/title_activity_schedule_family"
+            android:parentActivityName=".CreateEventTimeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dauntless.project.ScheduleTime" />
+        </activity>
+        <activity
+            android:name=".EventsActivity"
+            android:label="@string/title_activity_schedules" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name=".GalleryActivity"
+            android:label="@string/title_activity_gallery" >
+        </activity>
+        <activity
+            android:name=".FamiliesCircleActivity"
+            android:label="@string/title_activity_families" >
+        </activity>
+        <activity
+            android:name=".PetMenuActivity"
+            android:label="@string/title_activity_pet_menu" >
+        </activity>
+    </application>
+
+</manifest>

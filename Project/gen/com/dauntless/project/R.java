@@ -1077,7 +1077,16 @@ containing a value of this type.
         public static final int abc_textfield_searchview_holo_light=0x7f020054;
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
-        public static final int ic_launcher=0x7f020057;
+        public static final int coin=0x7f020057;
+        public static final int event=0x7f020058;
+        public static final int family_circles=0x7f020059;
+        public static final int gallery=0x7f02005a;
+        public static final int ic_launcher=0x7f02005b;
+        public static final int new_event=0x7f02005c;
+        public static final int panic_button=0x7f02005d;
+        public static final int pet_items=0x7f02005e;
+        public static final int pet_menu=0x7f02005f;
+        public static final int settings=0x7f020060;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f050046;
@@ -1092,16 +1101,24 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f05005d;
+        public static final int action_settings=0x7f05006a;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int analogClock1=0x7f050049;
         public static final int beginning=0x7f050011;
         public static final int checkbox=0x7f05002d;
-        public static final int coin=0x7f050059;
+        public static final int coin=0x7f05005d;
         public static final int collapseActionView=0x7f05000d;
         public static final int confirmTime=0x7f05004b;
-        public static final int container=0x7f050053;
+        public static final int container=0x7f05005b;
+        public static final int createFamily=0x7f050051;
+        public static final int createFamilyBtn=0x7f05005a;
+        public static final int createFamilyDetailBtn=0x7f050056;
+        public static final int createFamilyNameEdit=0x7f050053;
+        public static final int createFamilyNameText=0x7f050050;
+        public static final int createFamilyPositionEdit=0x7f050055;
+        public static final int createFamilyPositionText=0x7f050052;
+        public static final int createFamilySurnameEdit=0x7f050054;
         public static final int createMeeting=0x7f050045;
         public static final int day=0x7f050047;
         public static final int default_activity_button=0x7f050028;
@@ -1112,10 +1129,10 @@ containing a value of this type.
         public static final int end=0x7f050013;
         public static final int expand_activities_button=0x7f050026;
         public static final int expanded_menu=0x7f05002c;
-        public static final int families=0x7f050055;
+        public static final int families=0x7f05005c;
         public static final int food=0x7f05004c;
         public static final int friday=0x7f050041;
-        public static final int gallery=0x7f050058;
+        public static final int gallery=0x7f05005e;
         public static final int home=0x7f050014;
         public static final int homeAsUp=0x7f050005;
         public static final int icon=0x7f05002a;
@@ -1124,8 +1141,8 @@ containing a value of this type.
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
         public static final int main=0x7f05003c;
-        public static final int meetingResult=0x7f050051;
-        public static final int meetings=0x7f050054;
+        public static final int meetingResult=0x7f050058;
+        public static final int meetings=0x7f050061;
         public static final int middle=0x7f050012;
         public static final int monday=0x7f05003d;
         public static final int never=0x7f050009;
@@ -1133,17 +1150,17 @@ containing a value of this type.
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
         public static final int other=0x7f05004f;
-        public static final int panic=0x7f05005b;
-        public static final int petItems=0x7f05005c;
-        public static final int petMenu=0x7f050056;
+        public static final int panic=0x7f050064;
+        public static final int petItems=0x7f050068;
+        public static final int petMenu=0x7f050063;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
         public static final int rl=0x7f050044;
-        public static final int rls=0x7f050050;
+        public static final int rls=0x7f050057;
         public static final int saturday=0x7f050042;
-        public static final int schedule=0x7f050057;
-        public static final int schedulesHome=0x7f050052;
+        public static final int schedule=0x7f05005f;
+        public static final int schedulesHome=0x7f050059;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
         public static final int search_button=0x7f050033;
@@ -1154,7 +1171,7 @@ containing a value of this type.
         public static final int search_plate=0x7f050036;
         public static final int search_src_text=0x7f050037;
         public static final int search_voice_btn=0x7f05003b;
-        public static final int settings=0x7f05005a;
+        public static final int settings=0x7f050065;
         public static final int shopping=0x7f05004d;
         public static final int shortcut=0x7f05002e;
         public static final int showCustom=0x7f050007;
@@ -1164,6 +1181,11 @@ containing a value of this type.
         public static final int submit_area=0x7f050039;
         public static final int sunday=0x7f050043;
         public static final int tabMode=0x7f050002;
+        public static final int textCreateEvent=0x7f050069;
+        public static final int textEvents=0x7f050062;
+        public static final int textFamilies=0x7f050060;
+        public static final int textGallery=0x7f050066;
+        public static final int textPetMenu=0x7f050067;
         public static final int thursday=0x7f050040;
         public static final int timePicker=0x7f05004a;
         public static final int title=0x7f05002b;
@@ -1229,26 +1251,30 @@ containing a value of this type.
         public static final int activity_create_event_select_family=0x7f030019;
         public static final int activity_create_event_time=0x7f03001a;
         public static final int activity_create_event_type=0x7f03001b;
-        public static final int activity_events=0x7f03001c;
-        public static final int activity_families=0x7f03001d;
-        public static final int activity_gallery=0x7f03001e;
-        public static final int activity_main=0x7f03001f;
-        public static final int activity_pet_menu=0x7f030020;
-        public static final int activity_settings=0x7f030021;
-        public static final int fragment_main=0x7f030022;
-        public static final int support_simple_spinner_dropdown_item=0x7f030023;
+        public static final int activity_create_family=0x7f03001c;
+        public static final int activity_events=0x7f03001d;
+        public static final int activity_families=0x7f03001e;
+        public static final int activity_gallery=0x7f03001f;
+        public static final int activity_main=0x7f030020;
+        public static final int activity_pet_menu=0x7f030021;
+        public static final int activity_settings=0x7f030022;
+        public static final int activity_test=0x7f030023;
+        public static final int fragment_main=0x7f030024;
+        public static final int support_simple_spinner_dropdown_item=0x7f030025;
     }
     public static final class menu {
-        public static final int families=0x7f0c0000;
-        public static final int gallery=0x7f0c0001;
-        public static final int main=0x7f0c0002;
-        public static final int pet_menu=0x7f0c0003;
-        public static final int schedule_day=0x7f0c0004;
-        public static final int schedule_event=0x7f0c0005;
-        public static final int schedule_family=0x7f0c0006;
-        public static final int schedule_time=0x7f0c0007;
-        public static final int schedules=0x7f0c0008;
-        public static final int settings=0x7f0c0009;
+        public static final int create_family=0x7f0c0000;
+        public static final int families=0x7f0c0001;
+        public static final int gallery=0x7f0c0002;
+        public static final int main=0x7f0c0003;
+        public static final int pet_menu=0x7f0c0004;
+        public static final int schedule_day=0x7f0c0005;
+        public static final int schedule_event=0x7f0c0006;
+        public static final int schedule_family=0x7f0c0007;
+        public static final int schedule_time=0x7f0c0008;
+        public static final int schedules=0x7f0c0009;
+        public static final int settings=0x7f0c000a;
+        public static final int test=0x7f0c000b;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1294,6 +1320,7 @@ containing a value of this type.
         public static final int action_settings=0x7f0a000f;
         public static final int app_name=0x7f0a000d;
         public static final int hello_world=0x7f0a000e;
+        public static final int title_activity_create_family=0x7f0a0019;
         public static final int title_activity_families=0x7f0a0017;
         public static final int title_activity_gallery=0x7f0a0016;
         public static final int title_activity_pet_menu=0x7f0a0018;
@@ -1303,6 +1330,7 @@ containing a value of this type.
         public static final int title_activity_schedule_time=0x7f0a0012;
         public static final int title_activity_schedules=0x7f0a0014;
         public static final int title_activity_settings=0x7f0a0015;
+        public static final int title_activity_test=0x7f0a001a;
     }
     public static final class style {
         /** 
