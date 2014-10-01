@@ -50,6 +50,10 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         url = "http://192.168.1.67/LeFamilyController.php/";
 		Log.i("test","hello");
+<<<<<<< HEAD
+=======
+		new MyTask().execute(url);
+>>>>>>> b37d26f57935cd89739bc264d3c1ee86de25ebd2
 		
 		TelephonyManager telemanager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 	    //String getSimSerialNumber = telemanager.getLine1Number(); 
@@ -87,7 +91,11 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
         
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b37d26f57935cd89739bc264d3c1ee86de25ebd2
     }
 
 
