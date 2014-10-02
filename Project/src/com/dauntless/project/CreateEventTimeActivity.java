@@ -29,7 +29,7 @@ public class CreateEventTimeActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_event_time);
 		
-		AnalogClock analog = (AnalogClock) findViewById(R.id.analogClock1);
+		//AnalogClock analog = (AnalogClock) findViewById(R.id.analogClock1);
 		timepicker = (TimePicker) findViewById(R.id.timePicker);
 		
 		final Calendar c = Calendar.getInstance();

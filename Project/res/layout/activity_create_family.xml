@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.dauntless.project.CreateFamilyActivity" >
+
+    <TextView
+        android:id="@+id/createFamily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/createFamilyNameText"
+        android:layout_below="@+id/createFamilyNameText"
+        android:layout_marginTop="49dp"
+        android:text="Surname" />
+
+    <TextView
+        android:id="@+id/createFamilyPositionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/createFamily"
+        android:layout_below="@+id/createFamily"
+        android:layout_marginTop="53dp"
+        android:text="Position" />
+
+    <EditText
+        android:id="@+id/createFamilyNameEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/createFamily"
+        android:layout_below="@+id/createFamilyNameText"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/createFamilySurnameEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/createFamilyPositionText"
+        android:layout_below="@+id/createFamily"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/createFamilyPositionEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/createFamilyPositionText"
+        android:layout_below="@+id/createFamilyPositionText"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/createFamilyDetailBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/createFamilyPositionEdit"
+        android:layout_below="@+id/createFamilyPositionEdit"
+        android:layout_marginTop="29dp"
+        android:text="Create" />
+
+    <TextView
+        android:id="@+id/createFamilyNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="17dp"
+        android:text="Name" />
+
+</RelativeLayout>

@@ -1,18 +1,34 @@
 <?php
-header('Content-Type: application/json');
 require_once 'LeFamilyDB.php';
 $LFC = new LeFamilyController();
 // $response = $test->retreive_family_details(0);
-$phoneNumber = $_POST['phoneNumber'];
+//$phoneNumber = $_POST['phoneNumber'];
 $functionCall = $_POST['functionCall'];
 switch ($functionCall)
 {
 	//
 	case '1':
-		$returnValue = $LFC->check_for_existing_user($phoneNumber);
-		//error_log(print_R($returnValue,TRUE));
-		error_log(json_encode($returnValue));
-		echo json_encode($returnValue );
+		$phoneNumber = $_POST['phoneNumber']; // variables that is passed in
+		$returnValue = $LFC->check_for_existing_user($phoneNumber); // functions that use the variables
+		echo json_encode($returnValue ); // take value from functions to json
+		break;
+	case '2':
+		$familyDetails = json_decode($_POST['adminDetails'],true);	
+		error_log(print_r($familyDetails,true));
+		$returnValue = $LFC->create_family($familyDetails);
+		echo json_encode($returnValue); // take value from functions to json
+		break;
+	case '3':
+		$phoneNumber = $_POST['phoneNumber']; // variables that is passed in
+		$returnValue = $LFC->retreive_family_details($phoneNumber); // functions that use the variables
+		echo json_encode($returnValue ); // take value from functions to json
+		break;
+	case '4':
+		$familyID = $_POST['familyID']; // variables that is passed in
+		$returnValue = $LFC->retrieve_family_member($familyID); // functions that use the variables
+		echo json_encode($returnValue ); // take value from functions to json
+		break;
+		
 }
 class LeFamilyController
 {
@@ -48,9 +64,13 @@ class LeFamilyController
 	 */
 	function check_for_existing_user($phoneNumber)
 	{
-		$response = $this->LFDB->select_userID_from_userPhone($phoneNumber);
-		
-		return $response;
+		$response_userid = $this->LFDB->select_userID_from_userPhone($phoneNumber);
+		if($response_userid->success == false)
+		{
+			$response_createuser = $this->create_user($phoneNumber);
+			return $response_createuser;
+		}
+		return $response_userid;
 	}
 	/**
 	 * Create user
@@ -60,13 +80,11 @@ class LeFamilyController
 	 * 	-surname
 	 * @return string
 	 */
-	function create_user($userDetails)
+	function create_user($phoneNumber)
 	{
-		$userName = $userDetails['name'];
-		$userPhoneNumber = $userDetails['phoneNumber'];
-		$userSurname = $userDetails['surname'];
-		$response = $this->LFDB->insert_user($userName, $userPhoneNumber, $userSurname);
-		return json_encode($response);
+		
+		$response = $this->LFDB->insert_user($phoneNumber);
+		return $response;
 	}
 
 	/**
@@ -91,12 +109,15 @@ class LeFamilyController
 		if($userID != false)
 		{
 			$familyName = $familyDetails['familyName'];
+			$familyPostion = $familyDetails['position'];
+			$userName = $familyDetails['name'];
+			$admin = $familyDetails["admin"];
 			$response = $this->LFDB->insert_family($familyName, $userID);
 			if($response->success == true)
 			{
 				$response = $this->LFDB->select_familyID($familyName, $userID);
 				$familyID = $response->message[0];
-				$this->LFDB->insert_family_user($userID, $familyID, 'Admin');
+				$this->LFDB->insert_family_user($userID, $familyID, $familyPostion, $userName, $admin);
 				return json_encode($familyID);
 			}
 			else
@@ -118,6 +139,8 @@ class LeFamilyController
 	 *  -phoneNumber
 	 *  -familyID
 	 *  -position
+	 *  -username
+	 *  -
 	 * @return string
 	 */
 	function create_family_member($familyUserDetails)
@@ -126,6 +149,10 @@ class LeFamilyController
 		if($userID != false)
 		{
 			//send notification to invitee
+			$familyName = $familyDetails['familyName'];
+			$familyPostion = $familyDetails['position'];
+			$userName = $familyDetails['name'];
+			$admin = $familyDetails["admin"];
 			$this->LFDB->insert_family_user($userID, $familyUserDetails['familyID'], $familyUserDetails['position']);
 		}
 		else
@@ -152,12 +179,12 @@ class LeFamilyController
 		{
 			foreach($familyMember[$count] as $key => $value)
 			{
-				$responseUser = $this->LFDB->select_user($value);
-				$allMember[$count] = $responseUser;				
+				$responseUser = $this->LFDB->select_user($value, $familyID);
+				$allMember[$count] = $responseUser->message;				
 			}
 			$count++;
 		}
-		return json_encode($allMember);
+		return $allMember;
 	}
 	
 	/**
@@ -252,25 +279,93 @@ class LeFamilyController
 			foreach($familyIDArray[$count] as $key => $value)
 			{
 				$responseFamilyDetails = $this->LFDB->select_family($value);
-				//var_dump($responseFamilyDetails);
+				
 				$familyDetailsArray[$count] = $responseFamilyDetails->message;
 			}
 			$count++;
 		}
-		
-		return json_encode($familyDetailsArray);
+		error_log(print_r($familyDetailsArray, true));
+		return $familyDetailsArray;
 	
 	}
+	/**
+	 * inserting event and creating host user to event
+	 * 
+	 * @param int $phoneNumber
+	 * @param array $eventDetails
+	 * eg for $eventDetails"type" => "dinner", "title" => "popo birthday", "date" => "2014/09/09 11:45"
+	 * @return string
+	 */
+	function create_event($phoneNumber, $eventDetails)	
+	{
+		$userID = $this->retrieve_user_ID($phoneNumber);
+		$eventType = $eventDetails["type"];
+		$eventTitle = $eventDetails["title"];
+		$eventDateTime = $eventDetails["date"];
+		$responseEvent = $this->LFDB->insert_event($eventType,$eventTitle, $userID,$eventDateTime);
+		if($responseEvent->success == true)
+		{
+			$eventID = $responseEvent->message;
+			$response = $this->LFDB->insert_user_event($userID, $eventID);
+		}
+		return json_encode($responseEvent);
+	}
 	
+	/**
+	 * Editing of event
+	 * eventid is retrieved from create event function. the function returns the event ID 
+	 * @param array  $eventDetails
+	 *  eg for $eventDetails "id" => "1" "type" => "dinner", "title" => "popo birthday", "date" => "2014/09/09 11:45"
+	 * @return string
+	 */
+	function edit_event($eventDetails)
+	{
+		$eventID = $eventDetails["id"];
+		$eventType = $eventDetails["type"];
+		$eventTitle = $eventDetails["title"];
+		$eventDateTime = $eventDetails["date"];
+		$response = $this->LFDB->update_event($eventID, $eventType, $eventTitle, $eventDateTime);
+	
+		return json_encode($response);
+	}
+	function remove_event($eventID)
+	{
+		$response = $this->LFDB->delete_event($eventID);
+		return json_encode($response);
+	}
+	
+	function select_event($phoneNumber)
+	{
+		$counter = 0;
+		$eventArray = array();
+		$response = array();
+		$userID = $this->retrieve_user_ID($phoneNumber);
+
+		$responseFamilyID = $this->LFDB->select_family_id_by_user_id($userID);
+
+		foreach( $responseFamilyID->message as $familyID)
+		{
+			$responseEventInfo = $this->LFDB->select_event($familyID['family_userFamilyID'] );
+			if($responseEventInfo->success == true)
+			{
+				$eventArray[$counter] = $responseEventInfo->message;
+				$counter++;
+			}
+		}
+		$response["success"] = true;
+		$response["message"] = $eventArray;
+		error_log(print_r($eventArray, true));
+		return json_encode($response);
+	}
+	function add_user_to_event($phoneNumber, $eventID)
+	{
+		$userID = $this->retrieve_user_ID($phoneNumber);
+		
+		$response = $this->LFDB->insert_user_event( $userID,$eventID);
+		
+		return json_encode($response);
+	}
 		
 	
 }
-
-//$array = array("name" => "hi", "phoneNumber" => "1234568", "surname" => "ber");
-// $array = array("familyName" => "berber", "phoneNumber" => "1234568", "surname" => "ber");
-//$array = array("familyID" => 34, "phoneNumber" => "0" );
-// var_dump($array);
-// $test = new LeFamilyController();
-// $response = $test->retreive_family_details(0);
-// var_dump($response);
 ?>

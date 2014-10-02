@@ -2,9 +2,13 @@ INDEX VERSION 1.127+C:\Users\ChristinaWindows\Documents\GitHub\TeamDauntless\.me
 762204640.index
 2238424467.index
 1284074322.index
+<<<<<<< HEAD
 305446040.index
 1806945979.index
 861558591.index
 449384428.index
 3220914452.index
 4016579620.index
+=======
+2298503319.index
+>>>>>>> 4f61af12966d99822a2a9d6d2e91edfa3447940b

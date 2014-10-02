@@ -11,54 +11,15 @@
     tools:context="com.dauntless.project.MainActivity$PlaceholderFragment" >
 
     <ImageButton
-        android:id="@+id/meetings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/families"
-        android:layout_below="@+id/families"
-        android:src="@drawable/ic_launcher"
-        android:onClick="meetings" 
-        />
-
-    <ImageButton
-        android:id="@+id/petMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/families"
-        android:src="@drawable/ic_launcher" 
-        android:onClick="petMenu"
-        />
-
-    <ImageButton
-        android:id="@+id/schedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/petMenu"
-        android:layout_below="@+id/petMenu"
-        android:src="@drawable/ic_launcher"
-        android:onClick="schedule" />
-
-    <ImageButton
         android:id="@+id/families"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="false"
-        android:src="@drawable/ic_launcher"
+        android:background="@drawable/family_circles"
         android:onClick="families"
-         />
-
-    <ImageButton
-        android:id="@+id/gallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/meetings"
-        android:layout_below="@+id/meetings"
-        android:src="@drawable/ic_launcher" 
-        android:onClick="gallery"
-        />
+        android:src="@drawable/family_circles" />
 
     <ImageView
         android:id="@+id/coin"
@@ -68,33 +29,130 @@
         android:layout_alignLeft="@+id/schedule"
         android:layout_alignRight="@+id/schedule"
         android:layout_alignTop="@+id/gallery"
-        android:src="@drawable/abc_ab_bottom_solid_dark_holo" />
+        android:src="@drawable/coin" />
 
-    <ImageButton
-        android:id="@+id/settings"
+    <TextView
+        android:id="@+id/textFamilies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/gallery"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/abc_ab_bottom_solid_dark_holo"
-        android:onClick="settings" 
-         />
+        android:layout_alignLeft="@+id/meetings"
+        android:layout_below="@+id/families"
+        android:text="Family Circles"
+        android:textSize="14sp" />
+
+    <ImageButton
+        android:id="@+id/meetings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/families"
+        android:layout_below="@+id/textFamilies"
+        android:background="@drawable/event"
+        android:onClick="meetings"
+        android:src="@drawable/event" />
+
+    <ImageButton
+        android:id="@+id/schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textEvents"
+        android:layout_alignRight="@+id/petMenu"
+        android:background="@drawable/new_event"
+        android:onClick="schedule"
+        android:src="@drawable/new_event" />
+
+    <ImageButton
+        android:id="@+id/gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/meetings"
+        android:layout_below="@+id/textEvents"
+        android:background="@drawable/gallery"
+        android:onClick="gallery"
+        android:src="@drawable/gallery" />
 
     <ImageButton
         android:id="@+id/panic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/settings"
-        android:layout_alignRight="@+id/coin"
-        android:src="@drawable/abc_ab_bottom_solid_dark_holo" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/panic_button"
+        android:src="@drawable/panic_button" />
+
+    <ImageButton
+        android:id="@+id/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/settings"
+        android:onClick="settings"
+        android:src="@drawable/settings" />
+
+    <TextView
+        android:id="@+id/textGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gallery"
+        android:layout_below="@+id/gallery"
+        android:layout_marginLeft="14dp"
+        android:text="Gallery"
+        android:textSize="14sp" />
+
+    <ImageButton
+        android:id="@+id/petMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/panic"
+        android:layout_alignTop="@+id/families"
+        android:background="@drawable/pet_menu"
+        android:onClick="petMenu"
+        android:src="@drawable/pet_menu" />
+
+    <TextView
+        android:id="@+id/textPetMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/petMenu"
+        android:layout_below="@+id/petMenu"
+        android:text="Pet Menu"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/createFamilyNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textGallery"
+        android:layout_alignBottom="@+id/textGallery"
+        android:layout_alignRight="@+id/textPetMenu"
+        android:text="  Coins: 32"
+        android:textSize="14sp" />
 
     <ImageButton
         android:id="@+id/petItems"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/settings"
-        android:layout_toLeftOf="@+id/coin"
-        android:layout_toRightOf="@+id/gallery"
-        android:src="@drawable/ic_launcher" />
+        android:layout_alignBottom="@+id/panic"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/pet_items"
+        android:src="@drawable/pet_items" />
+
+    <TextView
+        android:id="@+id/textEvents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textGallery"
+        android:layout_below="@+id/meetings"
+        android:text="Events"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textCreateEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/schedule"
+        android:layout_below="@+id/schedule"
+        android:text="Create Event"
+        android:textSize="14sp" />
 
 </RelativeLayout>

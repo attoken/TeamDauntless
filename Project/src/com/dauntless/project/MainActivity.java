@@ -1,31 +1,97 @@
 package com.dauntless.project;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.os.Build;
 
 public class MainActivity extends ActionBarActivity {
 	public static final String MENU = "com.dauntless.project.MENU";
 	public String message = "";
 	
+	HttpClient httpclient;
+	HttpGet request;
+	HttpResponse response;
+	String url;
+	String phoneNumber;
+	
+	
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ConnectionClient cc = new ConnectionClient();
+        url = cc.getUrl();
+		Log.i("test","MainActivity");
+		
+		TelephonyManager telemanager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+	    //String getSimSerialNumber = telemanager.getLine1Number(); 
+		String getSimSerialNumber = telemanager.getSimSerialNumber();
+		
+		if(getSimSerialNumber == null)
+		{
+			phoneNumber = "9172174900000000000";
+			//Temporary Disabled for development
+			/*
+			Log.i("NULL", "No phone number");
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("You need to have an existing phone number to use this app!")
+			       .setCancelable(false)
+			       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			               finish(); 
+			           }
+			       });
+			AlertDialog alert = builder.create();
+			alert.show();
+			*/
+		}
+		else
+		{
+			Log.i("HEY PHONE NUMBER YO:", getSimSerialNumber);
+			phoneNumber = getSimSerialNumber;
+		}
+		
+		new MyTask().execute();
+	
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        
+
     }
 
 
@@ -106,4 +172,74 @@ public class MainActivity extends ActionBarActivity {
             return rootView;
         }
     }
+    
+    
+    private class MyTask extends AsyncTask<Void, Void, Void>
+	{		
+		 //TextView result = (TextView) findViewById(R.id.tvResult);
+		 //EditText test = (EditText) findViewById(R.id.editText1);
+
+		 int statusCode;
+		 String line;
+		 String text;
+		 String json;
+		 int indexStart;
+			int indexEnd;
+			StringBuilder builder = new StringBuilder();
+		    @Override
+		    protected Void doInBackground(Void... params) {
+		     
+		    	try {
+		    		System.setProperty("http.keepAlive", "false");
+					httpclient = new DefaultHttpClient();
+					HttpPost httppost = new HttpPost(url);
+					
+					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+				    nameValuePairs.add(new BasicNameValuePair("phoneNumber", phoneNumber));
+				    nameValuePairs.add(new BasicNameValuePair("functionCall", "1"));
+				    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+				    
+				    Log.i("bernard", "WOOHOO");
+					response = httpclient.execute(httppost);
+					Log.v("response code", response.getStatusLine()
+                            .getStatusCode() + ""); 
+					Log.i("bernard2", "WOOHOO2");				
+					json = EntityUtils.toString(response.getEntity());
+					
+					indexStart = json.indexOf("{");
+					indexEnd = json.indexOf("}");
+					json = json.substring(indexStart, indexEnd+1);
+					
+					JSONObject jobj = new JSONObject(json);
+					Log.i("jsonClass", json.getClass().toString());
+					Log.i("error",json);					
+
+				}
+
+				catch (Exception e) {
+					Log.e("error", e.toString());
+					Log.i("kenny", "was here");
+					// Code to handle exception
+					
+				}
+
+		     return null;
+		     
+		    }
+		    
+		    @Override
+		    protected void onPostExecute(Void result) {
+		     
+		    	try {
+					
+				} catch (Exception e) {
+					// Code to handle exception
+				} 
+		     
+		     super.onPostExecute(result);   
+		    }
+
+		   }
+		   
+		  
 }

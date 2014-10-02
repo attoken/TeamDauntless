@@ -1,25 +1,18 @@
 package com.example.testandroidtophp;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.ByteArrayBuffer;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -27,10 +20,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import org.json.JSONTokener;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 public class MainActivity extends Activity {
@@ -47,9 +36,8 @@ public class MainActivity extends Activity {
 
 		// URL of PHP Script
 
-		url = "http://10.0.2.2/LeFamilyController.php/";
-
-
+		url = "http://172.22.121.133:80/LeFamilyController.php/";
+		Log.i("test","hello");
 		new MyTask().execute();
 		
 	}
@@ -70,6 +58,7 @@ public class MainActivity extends Activity {
 		    protected Void doInBackground(Void... params) {
 		     
 		    	try {
+		    		
 					httpclient = new DefaultHttpClient();
 					HttpPost httppost = new HttpPost(url);
 					
@@ -77,24 +66,25 @@ public class MainActivity extends Activity {
 				    nameValuePairs.add(new BasicNameValuePair("phoneNumber", "0"));
 				    nameValuePairs.add(new BasicNameValuePair("functionCall", "1"));
 				    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-					response = httpclient.execute(httppost);
-
-					JSONObject jobj = new JSONObject();
+				    
+					response = httpclient.execute(httppost);				
 					
 					json = EntityUtils.toString(response.getEntity());
-
+					
 					indexStart = json.indexOf("{");
 					indexEnd = json.indexOf("}");
 					json = json.substring(indexStart, indexEnd+1);
-					Log.d("jsonClass", json.getClass().toString());
-					Log.d("error",json);
-					//test.setText(json);
+					
+					JSONObject jobj = new JSONObject(json);
+					Log.i("jsonClass", json.getClass().toString());
+					Log.i("error",json);
+					test.setText(json);
 
 				}
 
 				catch (Exception e) {
 					// Code to handle exception
-					test.setText(e.toString());
+					
 				}
 
 		     return null;

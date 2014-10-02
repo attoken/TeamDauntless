@@ -13,8 +13,13 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="setTime" key="selection"/>
+		<item value="create_user" key="selection"/>
 		<list key="findhistory">
+			<item value="create_user"/>
+			<item value="select_userID_from_userPhone"/>
+			<item value="check_for_existing_user"/>
+			<item value="insert_user"/>
+			<item value="Pet Store"/>
 			<item value="setTime"/>
 		</list>
 		<list key="replacehistory">
