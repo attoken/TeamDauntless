@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.dauntless.project.CreateEventTimeActivity" >
+    tools:context="com.dauntless.project.CreateEventTimeActivity" 
+    >
 
     <LinearLayout
         android:id="@+id/LinearLayout1"
@@ -15,32 +16,13 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
-
-        <ImageButton
-            android:id="@+id/night"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
     </LinearLayout>
-
-    <AnalogClock
-        android:id="@+id/analogClock1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/LinearLayout1"
-        android:layout_centerHorizontal="true" />
 
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/analogClock1"
+        android:layout_below="@+id/LinearLayout1"
         android:layout_centerHorizontal="true" />
 
     <ImageButton

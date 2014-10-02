@@ -1,6 +1,7 @@
 package com.dauntless.project;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -44,12 +45,15 @@ public class MainActivity extends ActionBarActivity {
 	String url;
 	String phoneNumber;
 	
+	
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        url = "http://192.168.1.67/LeFamilyController.php/";
-		Log.i("test","hello");
+        ConnectionClient cc = new ConnectionClient();
+        url = cc.getUrl();
+		Log.i("test","MainActivity");
 		
 		TelephonyManager telemanager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 	    //String getSimSerialNumber = telemanager.getLine1Number(); 
@@ -169,9 +173,9 @@ public class MainActivity extends ActionBarActivity {
         }
     }
     
-    private class MyTask extends AsyncTask<String, Void, Void>
-	{
-		
+    
+    private class MyTask extends AsyncTask<Void, Void, Void>
+	{		
 		 //TextView result = (TextView) findViewById(R.id.tvResult);
 		 //EditText test = (EditText) findViewById(R.id.editText1);
 
@@ -183,15 +187,15 @@ public class MainActivity extends ActionBarActivity {
 			int indexEnd;
 			StringBuilder builder = new StringBuilder();
 		    @Override
-		    protected Void doInBackground(String... params) {
+		    protected Void doInBackground(Void... params) {
 		     
 		    	try {
 		    		System.setProperty("http.keepAlive", "false");
 					httpclient = new DefaultHttpClient();
-					HttpPost httppost = new HttpPost(params[0]);
+					HttpPost httppost = new HttpPost(url);
 					
 					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-				    nameValuePairs.add(new BasicNameValuePair("phoneNumber", "0"));
+				    nameValuePairs.add(new BasicNameValuePair("phoneNumber", phoneNumber));
 				    nameValuePairs.add(new BasicNameValuePair("functionCall", "1"));
 				    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				    
@@ -199,10 +203,7 @@ public class MainActivity extends ActionBarActivity {
 					response = httpclient.execute(httppost);
 					Log.v("response code", response.getStatusLine()
                             .getStatusCode() + ""); 
-					Log.i("bernard2", "WOOHOO");
-					
-					
-					
+					Log.i("bernard2", "WOOHOO2");				
 					json = EntityUtils.toString(response.getEntity());
 					
 					indexStart = json.indexOf("{");
@@ -211,14 +212,13 @@ public class MainActivity extends ActionBarActivity {
 					
 					JSONObject jobj = new JSONObject(json);
 					Log.i("jsonClass", json.getClass().toString());
-					Log.i("error",json);
-					//test.setText(json);
-					
+					Log.i("error",json);					
 
 				}
 
 				catch (Exception e) {
 					Log.e("error", e.toString());
+					Log.i("kenny", "was here");
 					// Code to handle exception
 					
 				}
@@ -240,4 +240,6 @@ public class MainActivity extends ActionBarActivity {
 		    }
 
 		   }
+		   
+		  
 }

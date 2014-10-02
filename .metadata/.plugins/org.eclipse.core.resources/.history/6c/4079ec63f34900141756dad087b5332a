@@ -1,0 +1,8 @@
+package com.dauntless.project;
+
+public class ConnectionClient {
+	public String url = "http://172.27.121.133:80/LeFamilyController.php/";
+	
+	
+
+}
