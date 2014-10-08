@@ -1,12 +1,18 @@
 package com.dauntless.project;
 
 import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class GalleryActivity extends ActionBarActivity {
 
+	/*private Integer[] pics = {R.drawable.Chrysanthemum, R.drawable.Desert,
+			R.drawable.Jellyfish, R.drawable.Koala,
+			R.drawable.Lighthouse, R.drawable.Penguins};
+	*/
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,5 +36,12 @@ public class GalleryActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void activateCamera(View view) {
+	    Intent intent = new Intent(this, ActivateCamera.class);
+	    //String message = "Settings";
+	    //intent.putExtra(MENU, message);
+	    startActivity(intent);
 	}
 }

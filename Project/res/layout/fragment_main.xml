@@ -105,9 +105,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/panic"
         android:layout_alignTop="@+id/families"
-        android:background="@drawable/pet_menu"
+        android:background="@drawable/pet_store"
         android:onClick="petMenu"
-        android:src="@drawable/pet_menu" />
+        android:src="@drawable/pet_store" />
 
     <TextView
         android:id="@+id/textPetMenu"

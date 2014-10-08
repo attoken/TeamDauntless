@@ -19,22 +19,13 @@
         android:orientation="vertical" >
 
         <ImageButton
-            android:id="@+id/food"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:onClick="eventFood"
-            android:src="@drawable/ic_launcher" />
-
-        <ImageButton
             android:id="@+id/shopping"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:onClick="eventShopping"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/event_recreational" />
 
         <ImageButton
             android:id="@+id/zoo"
@@ -43,7 +34,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/food"
             android:onClick="eventZoo"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/event_shopping" />
 
         <ImageButton
             android:id="@+id/other"
@@ -52,7 +43,16 @@
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/zoo"
             android:onClick="eventOther"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/event_sports" />
+
+        <ImageButton
+            android:id="@+id/food"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:onClick="eventFood"
+            android:src="@drawable/event_food" />
 
     </RelativeLayout>
 

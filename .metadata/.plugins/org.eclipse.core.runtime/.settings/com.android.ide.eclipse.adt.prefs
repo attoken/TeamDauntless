@@ -1,10 +1,10 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=4f61af12966d99822a2a9d6d2e91edfa3447940b
+com.android.ide.eclipse.adt.autoPickTarget=false
 com.android.ide.eclipse.adt.fixLegacyEditors=1
 com.android.ide.eclipse.adt.refactorIds=always
-<<<<<<< HEAD
 com.android.ide.eclipse.adt.sdk=C\:\\Users\\ChristinaWindows\\Downloads\\adt-bundle-windows-x86_64-20140702\\adt-bundle-windows-x86_64-20140702\\sdk
-=======
-com.android.ide.eclipse.adt.sdk=C\:\\Users\\Kenny\\AppData\\Local\\Android\\android-sdk
 com.android.ide.eclipse.adt.xmlEditor=true
->>>>>>> 4f61af12966d99822a2a9d6d2e91edfa3447940b
-design.palette.flyout.width=168
+design.palette.flyout.width=190
 eclipse.preferences.version=1

@@ -8,4 +8,61 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.dauntless.project.GalleryActivity" >
 
+    <Gallery
+        android:id="@+id/gallery1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="215dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/gallery1"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="31dp"
+        android:src="@drawable/jellyfish" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/gallery1"
+        android:layout_below="@+id/imageView2"
+        android:src="@drawable/desert" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_below="@+id/imageView1"
+        android:src="@drawable/koala" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/imageView3"
+        android:layout_alignRight="@+id/gallery1"
+        android:src="@drawable/chrysanthemum" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignRight="@+id/gallery1"
+        android:layout_below="@+id/imageView4"
+        android:src="@drawable/penguins" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/gallery1"
+        android:layout_alignTop="@+id/imageView6"
+        android:src="@drawable/lighthouse" />
+
 </RelativeLayout>
